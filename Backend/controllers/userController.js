@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt';
 // Register user
 export const registerUser = async (req, res) => {
   try {
+    console.log('Request Body:', req.body); // Debug request payload
+
     const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
 
@@ -56,6 +58,22 @@ export const getUser = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// Get user profile details
+export const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password'); // Exclude password
+    
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 
 // Update user details
 export const updateUser = async (req, res) => {

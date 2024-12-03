@@ -3,6 +3,7 @@ import {
   registerUser,
   loginUser,
   getUser,
+  getProfile,
   updateUser,
   deleteUser,
 } from '../controllers/userController.js';
@@ -15,5 +16,7 @@ router.post('/login', loginUser);
 router.get('/:id', authMiddleware, getUser);
 router.put('/:id', authMiddleware, updateUser);
 router.delete('/:id', authMiddleware, deleteUser);
+router.get('/profile', authMiddleware, getProfile);
+
 
 export default router; // Use ES modules export
